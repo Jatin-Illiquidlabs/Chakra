@@ -1,0 +1,56 @@
+Shader "Custom/OverwatchStyleSurfaceShader" 
+{
+    Properties
+    {
+        _MainTex ("Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1,1,1,1)
+        _Glossiness ("Smoothness", Range(0,1)) = 0.5
+        _Metallic ("Metallic", Range(0,1)) = 0.0
+    }
+ 
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 100
+ 
+        CGPROGRAM
+        #include "UnlitPassMeshVertexCommon.ush"
+ 
+        struct Input
+        {
+            float2 uv_MainTex;
+            float3 worldNormal;
+            float3 worldPos;
+        };
+ 
+        sampler2D _MainTex;
+        float4 _Color;
+        float _Glossiness;
+        float _Metallic;
+ 
+        void vert(inout appdata_full v, out Input o)
+        {
+            UNITY_INITIALIZE_OUTPUT(Input, o);
+ 
+            v.vertex = UnityObjectToClipPos(v.vertex);
+ 
+            float3 worldNormal = UnityObjectToWorldNormal(v.normal);
+            o.worldNormal = worldNormal;
+ 
+            float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+            o.worldPos = worldPos;
+        }
+ 
+        void surf(Input IN, inout SurfaceOutputStandard o)
+        {
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex) * _Color.rgb;
+            o.Metallic = _Metallic;
+            o.Smoothness = _Glossiness;
+            o.Normal = UnpackNormal(texture2D(_MainTex, IN.uv_MainTex + _MainTex_TexelSize.xy));
+        }
+ 
+        ENDCG
+    }
+ 
+    FallBack "Diffuse"
+}
