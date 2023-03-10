@@ -93,5 +93,4 @@ DerivedDataCache/*
 
 # Rider plugin
 Plugins/Developer/*
-*.uasset
-*.umap
+
