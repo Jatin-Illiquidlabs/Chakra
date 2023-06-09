@@ -1,0 +1,12 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-EIKShared.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Work\Projects\Chakra\Intermediate\Build\Win64\ChakraEditor\Development\CoreUObject\SharedPCH.CoreUObject.ShadowErrors.InclOrderUnreal5_0.h.obj"
+"C:\Work\Projects\Chakra\Plugins\EOSIntegrationKit51\EOSIntegrationKit\Intermediate\Build\Win64\UnrealEditor\Development\EIKShared\Module.EIKShared.cpp.obj"
+"C:\Work\Projects\Chakra\Plugins\EOSIntegrationKit51\EOSIntegrationKit\Intermediate\Build\Win64\UnrealEditor\Development\EIKShared\Default.rc2.res"
+/OUT:"C:\Work\Projects\Chakra\Plugins\EOSIntegrationKit51\EOSIntegrationKit\Intermediate\Build\Win64\UnrealEditor\Development\EIKShared\UnrealEditor-EIKShared.lib"

@@ -1,0 +1,14 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.SocketSubsystemEIK.cpp.obj": [
+			"InternetAddrEIK.cpp.obj",
+			"NetConnectionEIK.cpp.obj",
+			"NetDriverEIKBase.cpp.obj",
+			"SocketEIK.cpp.obj",
+			"SocketSubsystemEIK.cpp.obj",
+			"SocketSubsystemEIKModule.cpp.obj",
+			"SocketSubsystemEIK.init.gen.cpp.obj"
+		]
+	}
+}

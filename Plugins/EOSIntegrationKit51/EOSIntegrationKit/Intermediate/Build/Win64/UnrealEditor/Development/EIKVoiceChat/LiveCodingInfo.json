@@ -1,0 +1,19 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.EIKVoiceChat.cpp.obj": [
+			"EVIK_Functions.cpp.obj",
+			"EIKVoiceChatModule.cpp.obj",
+			"EOSAudioDevicePool.cpp.obj",
+			"EOSVoiceChat.cpp.obj",
+			"EOSVoiceChatErrors.cpp.obj",
+			"EOSVoiceChatFactory.cpp.obj",
+			"EOSVoiceChatUser.cpp.obj",
+			"WindowsEOSVoiceChat.cpp.obj",
+			"EIK_Voice_Subsystem.cpp.obj",
+			"EIKVoiceChat.init.gen.cpp.obj",
+			"EIK_Voice_Subsystem.gen.cpp.obj",
+			"EVIK_Functions.gen.cpp.obj"
+		]
+	}
+}
