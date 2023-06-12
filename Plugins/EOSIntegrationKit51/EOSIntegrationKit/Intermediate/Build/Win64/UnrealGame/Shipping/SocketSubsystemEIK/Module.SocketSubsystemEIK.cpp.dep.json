@@ -6,6 +6,7 @@
         "PCH": "c:\\work\\projects\\chakra\\intermediate\\build\\win64\\chakra\\shipping\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
         "Includes": [
             "c:\\work\\projects\\chakra\\plugins\\eosintegrationkit51\\eosintegrationkit\\intermediate\\build\\win64\\unrealgame\\shipping\\socketsubsystemeik\\definitions.socketsubsystemeik.h",
+            "c:\\work\\projects\\chakra\\plugins\\eosintegrationkit51\\eosintegrationkit\\intermediate\\build\\win64\\unrealgame\\inc\\socketsubsystemeik\\uht\\socketsubsystemeik.init.gen.cpp",
             "c:\\work\\projects\\chakra\\plugins\\eosintegrationkit51\\eosintegrationkit\\source\\socketsubsystemeik\\private\\internetaddreik.cpp",
             "c:\\work\\projects\\chakra\\plugins\\eosintegrationkit51\\eosintegrationkit\\source\\socketsubsystemeik\\public\\internetaddreik.h",
             "c:\\work\\projects\\chakra\\plugins\\eosintegrationkit51\\eosintegrationkit\\source\\thirdparty\\eiksdk\\include\\eos_common.h",
