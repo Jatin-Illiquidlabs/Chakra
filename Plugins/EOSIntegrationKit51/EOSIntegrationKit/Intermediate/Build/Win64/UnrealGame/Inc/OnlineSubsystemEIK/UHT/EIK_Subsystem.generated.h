@@ -24,42 +24,42 @@ struct FSessionFindStruct;
 #endif
 #define ONLINESUBSYSTEMEIK_EIK_Subsystem_generated_h
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_22_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_22_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FOffersStruct_Statics; \
 	ONLINESUBSYSTEMEIK_API static class UScriptStruct* StaticStruct();
 
 
 template<> ONLINESUBSYSTEMEIK_API UScriptStruct* StaticStruct<struct FOffersStruct>();
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_58_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_58_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FSessionFindStruct_Statics; \
 	ONLINESUBSYSTEMEIK_API static class UScriptStruct* StaticStruct();
 
 
 template<> ONLINESUBSYSTEMEIK_API UScriptStruct* StaticStruct<struct FSessionFindStruct>();
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_83_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_83_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FFileListStruct_Statics; \
 	ONLINESUBSYSTEMEIK_API static class UScriptStruct* StaticStruct();
 
 
 template<> ONLINESUBSYSTEMEIK_API UScriptStruct* StaticStruct<struct FFileListStruct>();
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_140_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_140_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FEIKUniqueNetId_Statics; \
 	ONLINESUBSYSTEMEIK_API static class UScriptStruct* StaticStruct();
 
 
 template<> ONLINESUBSYSTEMEIK_API UScriptStruct* StaticStruct<struct FEIKUniqueNetId>();
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_214_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_214_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FEIK_Stats_Statics; \
 	ONLINESUBSYSTEMEIK_API static class UScriptStruct* StaticStruct();
 
 
 template<> ONLINESUBSYSTEMEIK_API UScriptStruct* StaticStruct<struct FEIK_Stats>();
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_226_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_226_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_Login_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -74,7 +74,7 @@ static inline void FBP_Login_Callback_DelegateWrapper(const FScriptDelegate& BP_
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_227_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_227_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_Logout_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -87,7 +87,7 @@ static inline void FBP_Logout_Callback_DelegateWrapper(const FScriptDelegate& BP
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_228_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_228_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_CreateSession_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -102,7 +102,7 @@ static inline void FBP_CreateSession_Callback_DelegateWrapper(const FScriptDeleg
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_229_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_229_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_CreateLobby_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -117,7 +117,7 @@ static inline void FBP_CreateLobby_Callback_DelegateWrapper(const FScriptDelegat
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_230_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_230_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_DestroySession_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -130,7 +130,7 @@ static inline void FBP_DestroySession_Callback_DelegateWrapper(const FScriptDele
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_231_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_231_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_PurchaseOffer_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -143,7 +143,7 @@ static inline void FBP_PurchaseOffer_Callback_DelegateWrapper(const FScriptDeleg
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_232_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_232_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_JoinSession_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -156,7 +156,7 @@ static inline void FBP_JoinSession_Callback_DelegateWrapper(const FScriptDelegat
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_233_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_233_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_GetTitleFile_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -169,7 +169,7 @@ static inline void FBP_GetTitleFile_Callback_DelegateWrapper(const FScriptDelega
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_234_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_234_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_UpdateStat_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -182,7 +182,7 @@ static inline void FBP_UpdateStat_Callback_DelegateWrapper(const FScriptDelegate
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_235_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_235_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_GetStats_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -197,7 +197,7 @@ static inline void FBP_GetStats_Callback_DelegateWrapper(const FScriptDelegate& 
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_236_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_236_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_FindSession_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -212,7 +212,7 @@ static inline void FBP_FindSession_Callback_DelegateWrapper(const FScriptDelegat
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_237_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_237_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_WriteFile_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -225,7 +225,7 @@ static inline void FBP_WriteFile_Callback_DelegateWrapper(const FScriptDelegate&
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_238_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_238_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_GetOffers_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -240,7 +240,7 @@ static inline void FBP_GetOffers_Callback_DelegateWrapper(const FScriptDelegate&
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_239_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_239_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_GetOwnedItems_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -255,7 +255,7 @@ static inline void FBP_GetOwnedItems_Callback_DelegateWrapper(const FScriptDeleg
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_240_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_240_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_GetFile_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -270,7 +270,7 @@ static inline void FBP_GetFile_Callback_DelegateWrapper(const FScriptDelegate& B
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_241_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_241_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_ConnectEOSAndPlayFab_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -285,7 +285,7 @@ static inline void FBP_ConnectEOSAndPlayFab_Callback_DelegateWrapper(const FScri
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_242_DELEGATE \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_242_DELEGATE \
 struct _Script_OnlineSubsystemEIK_eventBP_TitleFileList_Callback_Parms \
 { \
 	bool bWasSuccess; \
@@ -300,8 +300,8 @@ static inline void FBP_TitleFileList_Callback_DelegateWrapper(const FScriptDeleg
 }
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execGenerateSessionCode); \
 	DECLARE_FUNCTION(execGetOwnedItems); \
@@ -342,7 +342,7 @@ static inline void FBP_TitleFileList_Callback_DelegateWrapper(const FScriptDeleg
 	DECLARE_FUNCTION(execInitializeEIK);
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execGenerateSessionCode); \
 	DECLARE_FUNCTION(execGetOwnedItems); \
@@ -383,8 +383,8 @@ static inline void FBP_TitleFileList_Callback_DelegateWrapper(const FScriptDeleg
 	DECLARE_FUNCTION(execInitializeEIK);
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS_NO_PURE_DECLS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUEIK_Subsystem(); \
 	friend struct Z_Construct_UClass_UEIK_Subsystem_Statics; \
@@ -393,7 +393,7 @@ public: \
 	DECLARE_SERIALIZER(UEIK_Subsystem)
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS \
 private: \
 	static void StaticRegisterNativesUEIK_Subsystem(); \
 	friend struct Z_Construct_UClass_UEIK_Subsystem_Statics; \
@@ -402,7 +402,7 @@ public: \
 	DECLARE_SERIALIZER(UEIK_Subsystem)
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_STANDARD_CONSTRUCTORS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UEIK_Subsystem(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get()); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UEIK_Subsystem) \
@@ -416,7 +416,7 @@ public: \
 	NO_API virtual ~UEIK_Subsystem();
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ENHANCED_CONSTRUCTORS \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ENHANCED_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UEIK_Subsystem() { }; \
 private: \
@@ -430,27 +430,27 @@ public: \
 	NO_API virtual ~UEIK_Subsystem();
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_244_PROLOG
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_GENERATED_BODY_LEGACY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_244_PROLOG
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_STANDARD_CONSTRUCTORS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_GENERATED_BODY \
+#define FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS_NO_PURE_DECLS \
-	FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ENHANCED_CONSTRUCTORS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_SPARSE_DATA \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ACCESSORS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_INCLASS_NO_PURE_DECLS \
+	FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h_247_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
@@ -458,7 +458,7 @@ PRAGMA_ENABLE_DEPRECATION_WARNINGS
 template<> ONLINESUBSYSTEMEIK_API UClass* StaticClass<class UEIK_Subsystem>();
 
 #undef CURRENT_FILE_ID
-#define CURRENT_FILE_ID FID_HostProject_Plugins_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h
+#define CURRENT_FILE_ID FID_Work_Projects_Chakra_Plugins_EOSIntegrationKit51_EOSIntegrationKit_Source_OnlineSubsystemEIK_Subsystem_EIK_Subsystem_h
 
 
 #define FOREACH_ENUM_EREGIONINFO(op) \
