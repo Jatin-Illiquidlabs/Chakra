@@ -1,4 +1,4 @@
-
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 using UnrealBuildTool;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ public class ChakraTarget : TargetRules
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-
-		ExtraModuleNames.AddRange( new string[] { "Chakra" } );
+		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
+		ExtraModuleNames.Add("Chakra");
 	}
 }
