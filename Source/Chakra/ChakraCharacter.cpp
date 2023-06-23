@@ -100,6 +100,7 @@ void AChakraCharacter::Die()
 	OnCharacterDied.Broadcast(this);
 
 	if (AbilitySystemComponent.IsValid())
+	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->CancelAllAbilities();
 
@@ -133,7 +134,7 @@ UAbilitySystemComponent* AChakraCharacter::GetAbilitySystemComponent() const
 void AChakraCharacter::AddCharacterAbilities()
 {
 	// Grant abilities, but only on the server	
-	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->CharacterAbilitiesGiven)
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid()|| AbilitySystemComponent->CharacterAbilitiesGiven)
 	{
 		return;
 	}
@@ -225,6 +226,11 @@ int32 AChakraCharacter::GetCharacterLevel() const
 void AChakraCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AChakraCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
 }
 
 void AChakraCharacter::SetHealth(float Health)

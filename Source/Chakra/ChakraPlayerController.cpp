@@ -80,34 +80,35 @@ void AChakraPlayerController::OnInputStarted()
 // Triggered every frame when the input is held down
 void AChakraPlayerController::OnSetDestinationTriggered()
 {
-	// We flag that the input is being pressed
-	FollowTime += GetWorld()->GetDeltaSeconds();
 	
-	// We look for the location in the world where the player has pressed the input
-	FHitResult Hit;
-	bool bHitSuccessful = false;
-	if (bIsTouch)
-	{
-		bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, ECollisionChannel::ECC_Visibility, true, Hit);
-	}
-	else
-	{
-		bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
-	}
-
-	// If we hit a surface, cache the location
-	if (bHitSuccessful)
-	{
-		CachedDestination = Hit.Location;
-	}
-	
-	// Move towards mouse pointer or touch
-	APawn* ControlledPawn = GetPawn();
-	if (ControlledPawn != nullptr)
-	{
-		FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
-		ControlledPawn->AddMovementInput(WorldDirection, 1.0, false);
-	}
+		// We flag that the input is being pressed
+        	FollowTime += GetWorld()->GetDeltaSeconds();
+        	
+        	// We look for the location in the world where the player has pressed the input
+        	FHitResult Hit;
+        	bool bHitSuccessful = false;
+        	if (bIsTouch)
+        	{
+        		bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, ECollisionChannel::ECC_Visibility, true, Hit);
+        	}
+        	else
+        	{
+        		bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
+        	}
+        
+        	// If we hit a surface, cache the location
+        	if (bHitSuccessful)
+        	{
+        		CachedDestination = Hit.Location;
+        	}
+        	
+        	// Move towards mouse pointer or touch
+        	APawn* ControlledPawn = GetPawn();
+        	if (ControlledPawn != nullptr)
+        	{
+        		FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
+        		ControlledPawn->AddMovementInput(WorldDirection, 1.0, false);
+        	}
 }
 
 void AChakraPlayerController::OnSetDestinationReleased()

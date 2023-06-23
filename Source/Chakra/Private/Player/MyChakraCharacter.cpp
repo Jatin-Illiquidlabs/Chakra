@@ -3,6 +3,7 @@
 
 #include "Player/MyChakraCharacter.h"
 #include "AI/ChakraAIController.h"
+#include "Chakra/Chakra.h"
 #include "GAS/Abilities/ChakraAbilitySystemComponent.h"
 #include "Player/ChakraPlayerState.h"
 
@@ -28,8 +29,7 @@ void AMyChakraCharacter::PossessedBy(AController* NewController)
 
 	if (PS)
 	{
-
-		InitializeStartingValues(PS);
+		
 		AddStartupEffects();
 		AddCharacterAbilities();
 	}
@@ -40,6 +40,7 @@ void AMyChakraCharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
+
 void AMyChakraCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
@@ -48,9 +49,8 @@ void AMyChakraCharacter::OnRep_PlayerState()
 
 	if (PS)
 	{
-		InitializeStartingValues(PS);
 		BindASCInput();
-		InitializeAttributes();
+		InitializeStartingValues(PS);
 	}
 }
 
@@ -70,6 +70,7 @@ void AMyChakraCharacter::InitializeStartingValues(AChakraPlayerState* PS)
 		PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
 		AttributeSetBase = PS->GetAttributeSetBase();
 		AbilitySystemComponent->SetTagMapCount(DeadTag, 0);
+	    InitializeAttributes();
 		SetHealth(GetMaxHealth());
 		SetMana(GetMaxMana());
 }

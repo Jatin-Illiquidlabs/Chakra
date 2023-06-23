@@ -25,13 +25,13 @@ UCLASS(Blueprintable)
 class CHAKRA_API AChakraCharacter : public ACharacter , public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-
+ 
 public:
 	AChakraCharacter(const class FObjectInitializer& ObjectInitializer);
-
+                                                        
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Karakter")
-	CharactersType PlyerType;
+	CharactersType PlayerType;
 
 
 	UPROPERTY(BlueprintAssignable, Category = "Character")
@@ -85,6 +85,8 @@ private:
 protected:
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 	
 	TWeakObjectPtr<class UChakraAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UGDAttributeSetBase> AttributeSetBase;
