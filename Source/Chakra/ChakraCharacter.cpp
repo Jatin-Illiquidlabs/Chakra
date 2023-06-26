@@ -14,7 +14,7 @@
 #include "GAS/Abilities/UCharacterGameplayAbility.h"
 #include "GAS/Attributes/GDAttributeSetBase.h"
 
-AChakraCharacter::AChakraCharacter(const FObjectInitializer& ObjectInitializer)
+AChakraCharacter::AChakraCharacter(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer.SetDefaultSubobjectClass<UCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
 	// Set size for player capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
@@ -183,6 +183,7 @@ float AChakraCharacter::GetHealth() const
 	{
 		return AttributeSetBase->GetHealth();
 	}
+
 	return 0.0f;
 }
 

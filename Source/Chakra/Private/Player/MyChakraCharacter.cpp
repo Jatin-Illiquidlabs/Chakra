@@ -26,10 +26,10 @@ void AMyChakraCharacter::PossessedBy(AController* NewController)
 	Super::PossessedBy(NewController);
 
 	AChakraPlayerState* PS = GetPlayerState<AChakraPlayerState>();
-
 	if (PS)
 	{
-		
+
+		InitializeStartingValues();
 		AddStartupEffects();
 		AddCharacterAbilities();
 	}
@@ -46,11 +46,12 @@ void AMyChakraCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 
 	AChakraPlayerState* PS = GetPlayerState<AChakraPlayerState>();
-
 	if (PS)
 	{
+
+		InitializeStartingValues();
 		BindASCInput();
-		InitializeStartingValues(PS);
+		InitializeAttributes();
 	}
 }
 
@@ -64,13 +65,20 @@ void AMyChakraCharacter::BindASCInput()
 	}
 }
 
-void AMyChakraCharacter::InitializeStartingValues(AChakraPlayerState* PS)
+void AMyChakraCharacter::InitializeStartingValues()
 {
+	    AChakraPlayerState* PS = GetPlayerState<AChakraPlayerState>();
+	
 		AbilitySystemComponent = Cast<UChakraAbilitySystemComponent>(PS->GetAbilitySystemComponent());
+
 		PS->GetAbilitySystemComponent()->InitAbilityActorInfo(PS, this);
+
 		AttributeSetBase = PS->GetAttributeSetBase();
+
 		AbilitySystemComponent->SetTagMapCount(DeadTag, 0);
-	    InitializeAttributes();
+
 		SetHealth(GetMaxHealth());
 		SetMana(GetMaxMana());
+	
 }
+

@@ -33,6 +33,7 @@ protected:
     virtual void OnRep_PlayerState() override;
 
 	void BindASCInput();
+
+	void InitializeStartingValues();
 	
-	void InitializeStartingValues(AChakraPlayerState* PS);
 };

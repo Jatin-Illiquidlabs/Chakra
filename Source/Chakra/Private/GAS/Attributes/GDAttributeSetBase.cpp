@@ -6,6 +6,7 @@
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
 #include "Chakra/ChakraCharacter.h"
+#include "Chakra/ChakraPlayerController.h"
 
 
 UGDAttributeSetBase::UGDAttributeSetBase()
@@ -137,9 +138,9 @@ void UGDAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCall
 				// Play HitReact animation and sound with a multicast RPC.
 				const FHitResult* Hit = Data.EffectSpec.GetContext().GetHitResult();
 
-				/*if (Hit)
+				if (Hit)
 				{
-					EGDHitReactDirection HitDirection = TargetCharacter->GetHitReactDirection(Data.EffectSpec.GetContext().GetHitResult()->Location);
+					/*EGDHitReactDirection HitDirection = TargetCharacter->GetHitReactDirection(Data.EffectSpec.GetContext().GetHitResult()->Location);
 					switch (HitDirection)
 					{
 					case EGDHitReactDirection::Left:
@@ -154,23 +155,23 @@ void UGDAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCall
 					case EGDHitReactDirection::Back:
 						TargetCharacter->PlayHitReact(HitDirectionBackTag, SourceCharacter);
 						break;
-					}
+					}*/
 				}
 				else
 				{
 					// No hit result. Default to front.
-					TargetCharacter->PlayHitReact(HitDirectionFrontTag, SourceCharacter);
+					//TargetCharacter->PlayHitReact(HitDirectionFrontTag, SourceCharacter);
 				}
 
 				// Show damage number for the Source player unless it was self damage
 				if (SourceActor != TargetActor)
 				{
-					AGDPlayerController* PC = Cast<AGDPlayerController>(SourceController);
+					AChakraPlayerController* PC = Cast<AChakraPlayerController>(SourceController);
 					if (PC)
 					{
-						PC->ShowDamageNumber(LocalDamageDone, TargetCharacter);
+						//PC->ShowDamageNumber(LocalDamageDone, TargetCharacter);
 					}
-				}*/
+				}
 
 				if (!TargetCharacter->IsAlive())
 				{

@@ -24,8 +24,7 @@ class CHAKRA_API UGDAttributeSetBase : public UAttributeSet
 	GENERATED_BODY()
 	
 public:
-	
-UGDAttributeSetBase();
+	UGDAttributeSetBase();
 
 	// AttributeSet Overrides
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
@@ -183,5 +182,3 @@ private:
 	FGameplayTag HitDirectionRightTag;
 	FGameplayTag HitDirectionLeftTag;
 };
-
-
