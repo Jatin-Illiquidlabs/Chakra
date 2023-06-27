@@ -50,7 +50,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	TObjectPtr<UNiagaraComponent> NiagaraEffect;
-
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	USoundBase* ImpactSound;
 

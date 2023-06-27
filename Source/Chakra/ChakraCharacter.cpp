@@ -66,7 +66,7 @@ int32 AChakraCharacter::GetAbilityLevel(EGDAbilityInputID AbilityID) const
 
 void AChakraCharacter::RemoveCharacterAbilities()
 {
-	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || !AbilitySystemComponent->CharacterAbilitiesGiven)
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || !AbilitySystemComponent->bCharacterAbilitiesGiven)
 	{
 		return;
 	}
@@ -86,7 +86,7 @@ void AChakraCharacter::RemoveCharacterAbilities()
 		AbilitySystemComponent->ClearAbility(AbilitiesToRemove[i]);
 	}
 
-	AbilitySystemComponent->CharacterAbilitiesGiven = false;
+	AbilitySystemComponent->bCharacterAbilitiesGiven = false;
 }
 
 void AChakraCharacter::Die()
@@ -134,7 +134,7 @@ UAbilitySystemComponent* AChakraCharacter::GetAbilitySystemComponent() const
 void AChakraCharacter::AddCharacterAbilities()
 {
 	// Grant abilities, but only on the server	
-	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid()|| AbilitySystemComponent->CharacterAbilitiesGiven)
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid()|| AbilitySystemComponent->bCharacterAbilitiesGiven)
 	{
 		return;
 	}
@@ -145,7 +145,7 @@ void AChakraCharacter::AddCharacterAbilities()
 			FGameplayAbilitySpec(StartupAbility, GetAbilityLevel(StartupAbility.GetDefaultObject()->AbilityID), static_cast<int32>(StartupAbility.GetDefaultObject()->AbilityInputID), this));
 	}
 
-	AbilitySystemComponent->CharacterAbilitiesGiven = true;
+	AbilitySystemComponent->bCharacterAbilitiesGiven = true;
 }
 
 void AChakraCharacter::InitializeAttributes()
