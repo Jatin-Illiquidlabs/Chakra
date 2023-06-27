@@ -27,95 +27,117 @@ class CHAKRA_API AChakraCharacter : public ACharacter , public IAbilitySystemInt
 	GENERATED_BODY()
  
 public:
+public:
+	// Sets default values for this character's properties
 	AChakraCharacter(const class FObjectInitializer& ObjectInitializer);
-                                                        
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Karakter")
-	CharactersType PlayerType;
-
-
-	UPROPERTY(BlueprintAssignable, Category = "Character")
-	FCharacterDiedDelegate OnCharacterDied;
-
-	UFUNCTION(BlueprintCallable, Category = "Character")
-	virtual bool IsAlive() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Character")
-	virtual int32 GetAbilityLevel(EGDAbilityInputID AbilityID) const;
-
-	virtual void RemoveCharacterAbilities();
-
-	virtual void Die();
-
-	UFUNCTION(BlueprintCallable, Category= "Character")
-	virtual void FinishDying();
-
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetHealth() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetMaxHealth() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetMana() const;
-
-	UFUNCTION(BlueprintCallable, Category = "Attributes")
-	float GetMaxMana() const;
 	
-	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
-	int32 GetCharacterLevel() const;
+
+	UPROPERTY(BlueprintAssignable, Category = "GASDocumentation|GDCharacter")
+	FCharacterDiedDelegate OnCharacterDied;
 
 	// Implement IAbilitySystemInterface
 	virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	/** Returns TopDownCameraComponent subobject **/
-	FORCEINLINE class UCameraComponent* GetTopDownCameraComponent() const { return TopDownCameraComponent; }
-	/** Returns CameraBoom subobject **/
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter")
+	virtual bool IsAlive() const;
 
-private:
-	/** Top down camera */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class UCameraComponent* TopDownCameraComponent;
+	// Switch on AbilityID to return individual ability levels. Hardcoded to 1 for every ability in this project.
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter")
+	virtual int32 GetAbilityLevel(EGDAbilityInputID AbilityID) const;
 
-	/** Camera boom positioning the camera above the character */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	class USpringArmComponent* CameraBoom;
+	// Removes all CharacterAbilities. Can only be called by the Server. Removing on the Server will remove from Client too.
+	virtual void RemoveCharacterAbilities();
+
+
+	/**
+	* Getters for attributes from GDAttributeSetBase
+	**/
+	
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	int32 GetCharacterLevel() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMana() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMaxMana() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetStamina() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMaxStamina() const;
+	
+	// Gets the Current value of MoveSpeed
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMoveSpeed() const;
+
+	// Gets the Base value of MoveSpeed
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter|Attributes")
+	float GetMoveSpeedBaseValue() const;
+
+
+	virtual void Die();
+
+	UFUNCTION(BlueprintCallable, Category = "GASDocumentation|GDCharacter")
+	virtual void FinishDying();
 
 protected:
-
+	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	virtual void Tick(float DeltaSeconds) override;
-	
+	// Instead of TWeakObjectPtrs, you could just have UPROPERTY() hard references or no references at all and just call
+	// GetAbilitySystem() and make a GetAttributeSetBase() that can read from the PlayerState or from child classes.
+	// Just make sure you test if the pointer is valid before using.
+	// I opted for TWeakObjectPtrs because I didn't want a shared hard reference here and I didn't want an extra function call of getting
+	// the ASC/AttributeSet from the PlayerState or child classes every time I referenced them in this base class.
+
 	TWeakObjectPtr<class UChakraAbilitySystemComponent> AbilitySystemComponent;
 	TWeakObjectPtr<class UGDAttributeSetBase> AttributeSetBase;
 
+	FGameplayTag HitDirectionFrontTag;
+	FGameplayTag HitDirectionBackTag;
+	FGameplayTag HitDirectionRightTag;
+	FGameplayTag HitDirectionLeftTag;
 	FGameplayTag DeadTag;
 	FGameplayTag EffectRemoveOnDeathTag;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category= "Character")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASDocumentation|GDCharacter")
 	FText CharacterName;
-	
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category= "Abilities")
-	TArray<TSubclassOf<class UUCharacterGameplayAbility>> CharacterAbilities;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category= "Animations")
+	// Death Animation
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "GASDocumentation|Animation")
 	UAnimMontage* DeathMontage;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category= "Abilities")
+	// Default abilities for this Character. These will be removed on Character death and regiven if Character respawns.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASDocumentation|Abilities")
+	TArray<TSubclassOf<class UUCharacterGameplayAbility>> CharacterAbilities;
+
+	// Default attributes for a character for initializing on spawn/respawn.
+	// This is an instant GE that overrides the values for attributes that get reset on spawn/respawn.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASDocumentation|Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
 
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category= "Abilities")
+	// These effects are only applied one time on startup
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "GASDocumentation|Abilities")
 	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 
+	// Grant abilities on the Server. The Ability Specs will be replicated to the owning client.
 	virtual void AddCharacterAbilities();
 
+	// Initialize the Character's attributes. Must run on Server but we run it on Client too
+	// so that we don't have to wait. The Server's replication to the Client won't matter since
+	// the values should be the same.
 	virtual void InitializeAttributes();
 
 	virtual void AddStartupEffects();
 
-	
 
 	/**
 	* Setters for Attributes. Only use these in special cases like Respawning, otherwise use a GE to change Attributes.

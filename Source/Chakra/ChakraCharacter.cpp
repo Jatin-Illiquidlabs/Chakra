@@ -14,44 +14,29 @@
 #include "GAS/Abilities/UCharacterGameplayAbility.h"
 #include "GAS/Attributes/GDAttributeSetBase.h"
 
-AChakraCharacter::AChakraCharacter(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer.SetDefaultSubobjectClass<UCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
+// Sets default values
+AChakraCharacter::AChakraCharacter(const class FObjectInitializer& ObjectInitializer) :
+	Super(ObjectInitializer.SetDefaultSubobjectClass<UCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
-	// Set size for player capsule
-	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
+ 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = false;
+
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Overlap);
-
-	// Don't rotate character to camera direction
-	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false;
-
-	// Configure character movement
-	GetCharacterMovement()->bOrientRotationToMovement = true; // Rotate character to moving direction
-	GetCharacterMovement()->RotationRate = FRotator(0.f, 640.f, 0.f);
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart = true;
-
-	// Create a camera boom...
-	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
-	CameraBoom->SetUsingAbsoluteRotation(true); // Don't want arm to rotate when character does
-	CameraBoom->TargetArmLength = 800.f;
-	CameraBoom->SetRelativeRotation(FRotator(-60.f, 0.f, 0.f));
-	CameraBoom->bDoCollisionTest = false; // Don't want to pull camera in when it collides with level
-
-	// Create a camera...
-	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("TopDownCamera"));
-	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
-	TopDownCameraComponent->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
-	// Activate ticking in order to update the cursor every frame.
-	PrimaryActorTick.bCanEverTick = true;
-	PrimaryActorTick.bStartWithTickEnabled = true;
 
 	bAlwaysRelevant = true;
 
+	// Cache tags
+	HitDirectionFrontTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Front"));
+	HitDirectionBackTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Back"));
+	HitDirectionRightTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Right"));
+	HitDirectionLeftTag = FGameplayTag::RequestGameplayTag(FName("Effect.HitReact.Left"));
 	DeadTag = FGameplayTag::RequestGameplayTag(FName("State.Dead"));
-	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("State.RemoveOnDeath"));
+	EffectRemoveOnDeathTag = FGameplayTag::RequestGameplayTag(FName("Effect.RemoveOnDeath"));
+}
+
+UAbilitySystemComponent * AChakraCharacter::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent.Get();
 }
 
 bool AChakraCharacter::IsAlive() const
@@ -71,6 +56,7 @@ void AChakraCharacter::RemoveCharacterAbilities()
 		return;
 	}
 
+	// Remove any abilities added from a previous call. This checks to make sure the ability is in the startup 'CharacterAbilities' array.
 	TArray<FGameplayAbilitySpecHandle> AbilitiesToRemove;
 	for (const FGameplayAbilitySpec& Spec : AbilitySystemComponent->GetActivatableAbilities())
 	{
@@ -89,8 +75,100 @@ void AChakraCharacter::RemoveCharacterAbilities()
 	AbilitySystemComponent->bCharacterAbilitiesGiven = false;
 }
 
+int32 AChakraCharacter::GetCharacterLevel() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return static_cast<int32>(AttributeSetBase->GetCharacterLevel());
+	}
+
+	return 0;
+}
+
+float AChakraCharacter::GetHealth() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetHealth();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMaxHealth() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMaxHealth();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMana() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMana();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMaxMana() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMaxMana();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetStamina() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetStamina();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMaxStamina() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMaxStamina();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMoveSpeed() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMoveSpeed();
+	}
+
+	return 0.0f;
+}
+
+float AChakraCharacter::GetMoveSpeedBaseValue() const
+{
+	if (AttributeSetBase.IsValid())
+	{
+		return AttributeSetBase->GetMoveSpeedAttribute().GetGameplayAttributeData(AttributeSetBase.Get())->GetBaseValue();
+	}
+
+	return 0.0f;
+}
+
+// Run on Server and all clients
 void AChakraCharacter::Die()
 {
+	// Only runs on Server
 	RemoveCharacterAbilities();
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -100,13 +178,12 @@ void AChakraCharacter::Die()
 	OnCharacterDied.Broadcast(this);
 
 	if (AbilitySystemComponent.IsValid())
-	if (AbilitySystemComponent.IsValid())
 	{
 		AbilitySystemComponent->CancelAllAbilities();
 
-		FGameplayTagContainer EffectsTagsToRemove;
-		EffectsTagsToRemove.AddTag(EffectRemoveOnDeathTag);
-		int32 NumEffectsRemoved = AbilitySystemComponent->RemoveActiveEffectsWithTags(EffectsTagsToRemove);
+		FGameplayTagContainer EffectTagsToRemove;
+		EffectTagsToRemove.AddTag(EffectRemoveOnDeathTag);
+		int32 NumEffectsRemoved = AbilitySystemComponent->RemoveActiveEffectsWithTags(EffectTagsToRemove);
 
 		AbilitySystemComponent->AddLooseGameplayTag(DeadTag);
 	}
@@ -126,15 +203,16 @@ void AChakraCharacter::FinishDying()
 	Destroy();
 }
 
-UAbilitySystemComponent* AChakraCharacter::GetAbilitySystemComponent() const
+// Called when the game starts or when spawned
+void AChakraCharacter::BeginPlay()
 {
-	return AbilitySystemComponent.Get();
+	Super::BeginPlay();
 }
 
 void AChakraCharacter::AddCharacterAbilities()
 {
 	// Grant abilities, but only on the server	
-	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid()|| AbilitySystemComponent->bCharacterAbilitiesGiven)
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->bCharacterAbilitiesGiven)
 	{
 		return;
 	}
@@ -154,14 +232,34 @@ void AChakraCharacter::InitializeAttributes()
 	{
 		return;
 	}
+
 	if (!DefaultAttributes)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s() Missing DefaultAttributes for %s. Please fill in the character's Blueprint."), *FString(__FUNCTION__), *GetName());
 		return;
 	}
+
+	// Can run on Server and Client
 	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
-	
+
+	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, GetCharacterLevel(), EffectContext);
+	if (NewHandle.IsValid())
+	{
+		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
+	}
+}
+
+void AChakraCharacter::AddStartupEffects()
+{
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent.IsValid() || AbilitySystemComponent->bStartupEffectsApplied)
+	{
+		return;
+	}
+
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
 	for (TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
 	{
 		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, GetCharacterLevel(), EffectContext);
@@ -170,68 +268,8 @@ void AChakraCharacter::InitializeAttributes()
 			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent.Get());
 		}
 	}
-}
 
-void AChakraCharacter::AddStartupEffects()
-{
-}
-
-
-float AChakraCharacter::GetHealth() const
-{
-	if (AttributeSetBase.IsValid())
-	{
-		return AttributeSetBase->GetHealth();
-	}
-
-	return 0.0f;
-}
-
-float AChakraCharacter::GetMaxHealth() const
-{
-	if (AttributeSetBase.IsValid())
-	{
-		return AttributeSetBase->GetMaxHealth();
-	}
-	return 0.0f;
-}
-
-float AChakraCharacter::GetMana() const
-{
-	if (AttributeSetBase.IsValid())
-	{
-		return AttributeSetBase->GetMana();
-	}
-	return 0.0f;
-}
-
-float AChakraCharacter::GetMaxMana() const
-{
-	if (AttributeSetBase.IsValid())
-	{
-		return AttributeSetBase->GetMaxMana();
-	}
-	return 0.0f;
-}
-
-int32 AChakraCharacter::GetCharacterLevel() const
-{
-	if (AttributeSetBase.IsValid())
-	{
-		return static_cast<int32>(AttributeSetBase->GetCharacterLevel());
-	}
-
-	return 0;
-}
-
-void AChakraCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-void AChakraCharacter::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
+	AbilitySystemComponent->bStartupEffectsApplied = true;
 }
 
 void AChakraCharacter::SetHealth(float Health)
@@ -252,4 +290,8 @@ void AChakraCharacter::SetMana(float Mana)
 
 void AChakraCharacter::SetStamina(float Stamina)
 {
+	if (AttributeSetBase.IsValid())
+	{
+		AttributeSetBase->SetStamina(Stamina);
+	}
 }
