@@ -17,6 +17,8 @@ AChakraPlayerController::AChakraPlayerController()
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
+
+	CachedLocaiton = CachedDestination;
 }
 
 void AChakraPlayerController::BeginPlay()

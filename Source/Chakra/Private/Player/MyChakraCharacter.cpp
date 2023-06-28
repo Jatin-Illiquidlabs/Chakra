@@ -1,4 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Player/MyChakraCharacter.h"
@@ -250,12 +251,12 @@ void AMyChakraCharacter::OnRep_PlayerState()
 
 void AMyChakraCharacter::BindASCInput()
 {
-	/*if (!ASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
+	if (!ASCInputBound && AbilitySystemComponent.IsValid() && IsValid(InputComponent))
 	{
-		FTopLevelAssetPath AbilityEnumAssetPath = FTopLevelAssetPath(FName("/Script/GASDocumentation"), FName("EGDAbilityInputID"));
+		FTopLevelAssetPath AbilityEnumAssetPath = FTopLevelAssetPath(FName("/Script/Chakra"), FName("EGDAbilityInputID"));
 		AbilitySystemComponent->BindAbilityActivationToInputComponent(InputComponent, FGameplayAbilityInputBinds(FString("ConfirmTarget"),
 			FString("CancelTarget"), AbilityEnumAssetPath, static_cast<int32>(EGDAbilityInputID::Confirm), static_cast<int32>(EGDAbilityInputID::Cancel)));
 
 		ASCInputBound = true;
-	}*/
+	}
 }

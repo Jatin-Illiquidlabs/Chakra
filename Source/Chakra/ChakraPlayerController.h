@@ -19,6 +19,9 @@ class AChakraPlayerController : public APlayerController
 public:
 	AChakraPlayerController();
 
+	UPROPERTY(BlueprintReadOnly, Category = "Vectors")
+	FVector CachedLocaiton;
+	
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	float ShortPressThreshold;
