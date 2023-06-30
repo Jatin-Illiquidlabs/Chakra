@@ -8,15 +8,15 @@ public class Chakra : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput" });
+		PublicDependencyModuleNames.AddRange(new string[] {"Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput"  });
 
-        PrivateDependencyModuleNames.AddRange(new string[] {
-	        "Slate",
-	        "SlateCore",
-	        "GameplayAbilities",
-	        "GameplayTags",
-	        "GameplayTasks"
-        });
+		PrivateDependencyModuleNames.AddRange(new string[] {
+			"Slate",
+			"SlateCore",
+			"GameplayAbilities",
+			"GameplayTags",
+			"GameplayTasks"
+		});
         
 	}
 }
