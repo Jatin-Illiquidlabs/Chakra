@@ -3,8 +3,10 @@
 
 #include "GAS/Abilities/ChakraShoot.h"
 
+#include "GameFramework/Character.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "GAS/ChakraAbilitySystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 
 FString UChakraShoot::GetDescription(int32 Level)
@@ -104,7 +106,7 @@ void UChakraShoot::SpawnProjectiles(const FVector& ProjectileTargetLocation, con
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
-
+	
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
 		SocketTag);

@@ -3,30 +3,25 @@
 
 #include "GAS/Abilities/ChakraSpawnProjectile.h"
 
+#include "Kismet/KismetMathLibrary.h"
+
 
 void UChakraSpawnProjectile::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-										   const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-										   const FGameplayEventData* TriggerEventData)
+                                             const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+                                             const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-
-	
-	
 }
 
 void UChakraSpawnProjectile::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
-
+	
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
 		SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
-	if (bOverridePitch)
-	{
-		Rotation.Pitch = PitchOverride;
-	}
 	
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);
