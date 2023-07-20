@@ -113,7 +113,7 @@ void UChakraShoot::SpawnProjectiles(const FVector& ProjectileTargetLocation, con
 	
 	const FVector Forward = Rotation.Vector();
 	const int32 EffectiveNumProjectiles = FMath::Min(NumProjectiles, GetAbilityLevel());
-	TArray<FRotator> Rotations = UChakraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::UpVector, ProjectileSpread, EffectiveNumProjectiles);
+	TArray<FRotator> Rotations = UChakraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::ForwardVector, ProjectileSpread, EffectiveNumProjectiles);
 
 	for (const FRotator& Rot : Rotations)
 	{
