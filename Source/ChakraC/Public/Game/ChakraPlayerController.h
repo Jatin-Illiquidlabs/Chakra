@@ -2,8 +2,9 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+ #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "GameplayTagContainer.h"
 #include "ChakraPlayerController.generated.h"
 
 
@@ -94,8 +95,8 @@ private:
 
 	void AutoRun();
 
-	/*UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;*/
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AMagicCircle> MagicCircleClass;

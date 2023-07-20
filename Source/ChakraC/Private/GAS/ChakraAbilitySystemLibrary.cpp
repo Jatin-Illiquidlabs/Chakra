@@ -6,7 +6,6 @@
 #include "ChakraGameplayTags.h"
 #include "GameplayAbilitySpec.h"
 #include "GameplayEffectTypes.h"
-#include "Data/CharacterClassInfo.h"
 #include "Game/ChakraGameModeBase.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"

@@ -1,0 +1,24 @@
+Begin Object Class=/Script/Engine.Blueprint Name="GE_SecondaryAttributes_Enemy" ExportPath=/Script/Engine.Blueprint'"/Game/Blueprints/AbilitySystem/Enemy/Effects/GE_SecondaryAttributes_Enemy.GE_SecondaryAttributes_Enemy"'
+   Begin Object Class=/Script/Engine.EdGraph Name="EventGraph" ExportPath=/Script/Engine.EdGraph'"/Game/Blueprints/AbilitySystem/Enemy/Effects/GE_SecondaryAttributes_Enemy.GE_SecondaryAttributes_Enemy:EventGraph"'
+   End Object
+   Begin Object Name="EventGraph" ExportPath=/Script/Engine.EdGraph'"/Game/Blueprints/AbilitySystem/Enemy/Effects/GE_SecondaryAttributes_Enemy.GE_SecondaryAttributes_Enemy:EventGraph"'
+      Schema=/Script/CoreUObject.Class'"/Script/BlueprintGraph.EdGraphSchema_K2"'
+      bAllowDeletion=False
+      GraphGuid=A3899E8045D9F8E4059781ADB1642B15
+   End Object
+   ParentClass=/Script/CoreUObject.Class'"/Script/GameplayAbilities.GameplayEffect"'
+   BlueprintSystemVersion=2
+   UbergraphPages(0)=/Script/Engine.EdGraph'"EventGraph"'
+   CategorySorting(0)="Period"
+   CategorySorting(1)="Gameplay Effect"
+   CategorySorting(2)="Overflow"
+   CategorySorting(3)="Expiration"
+   CategorySorting(4)="Display"
+   CategorySorting(5)="Tags"
+   CategorySorting(6)="Immunity"
+   CategorySorting(7)="Stacking"
+   CategorySorting(8)="Granted Abilities"
+   GeneratedClass=/Script/Engine.BlueprintGeneratedClass'"GE_SecondaryAttributes_Enemy_C"'
+   bLegacyNeedToPurgeSkelRefs=False
+   BlueprintGuid=74DBB3AB4B9B140B6DED78A0E0A3847D
+End Object

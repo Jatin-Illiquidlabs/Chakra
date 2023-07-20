@@ -13,9 +13,11 @@
 #include "ChakraC/ChakraC.h"
 #include "Components/DecalComponent.h"
 #include "Components/SplineComponent.h"
+#include "GameFramework/Character.h"
 #include "GAS/ChakraAbilitySystemComponent.h"
 #include "Input/ChakraInputComponent.h"
 #include "Interface/EnemyInterface.h"
+#include "Widget/DamageTextComponent.h"
 
 
 AChakraPlayerController::AChakraPlayerController()
@@ -53,7 +55,7 @@ void AChakraPlayerController::HideMagicCircle()
 }
 
 void AChakraPlayerController::ShowDamageNumber_Implementation(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit, bool bCriticalHit)
-{/*
+{
 	if (IsValid(TargetCharacter) && DamageTextComponentClass && IsLocalController())
 	{
 		UDamageTextComponent* DamageText = NewObject<UDamageTextComponent>(TargetCharacter, DamageTextComponentClass);
@@ -61,7 +63,7 @@ void AChakraPlayerController::ShowDamageNumber_Implementation(float DamageAmount
 		DamageText->AttachToComponent(TargetCharacter->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 		DamageText->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
 		DamageText->SetDamageText(DamageAmount, bBlockedHit, bCriticalHit);
-	}*/
+	}
 }
 
 void AChakraPlayerController::AutoRun()
