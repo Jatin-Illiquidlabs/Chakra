@@ -111,8 +111,6 @@ void UChakraShoot::SpawnProjectiles(const FVector& ProjectileTargetLocation, con
 		GetAvatarActorFromActorInfo(),
 		SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation- SocketLocation).Rotation();
-	if (bOverridePitch) Rotation.Pitch = PitchOverride;
-
 	
 	const FVector Forward = Rotation.Vector();
 	const int32 EffectiveNumProjectiles = FMath::Min(NumProjectiles, GetAbilityLevel());
