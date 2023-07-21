@@ -29,16 +29,6 @@ AChakraCharacter::AChakraCharacter()
 	LevelUpNiagaraComponent->SetupAttachment(GetRootComponent());
 	LevelUpNiagaraComponent->bAutoActivate = false;
 	
-	ArrowLeft = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent1"));
-	ArrowMid = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent2"));
-	ArrowRight = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent3"));
-
-	
-	ArrowLeft->SetupAttachment(GetMesh());
-	ArrowMid->SetupAttachment(GetMesh());
-	ArrowRight->SetupAttachment(GetMesh());
-
-	
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 400.f, 0.f);
 	GetCharacterMovement()->bConstrainToPlane = true;

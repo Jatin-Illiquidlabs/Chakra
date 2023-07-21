@@ -110,18 +110,18 @@ void UChakraShoot::SpawnProjectiles(const FVector& ProjectileTargetLocation, con
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
 		SocketTag);
-	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+	FRotator Rotation = (ProjectileTargetLocation- SocketLocation).Rotation();
 	if (bOverridePitch) Rotation.Pitch = PitchOverride;
+
 	
 	const FVector Forward = Rotation.Vector();
 	const int32 EffectiveNumProjectiles = FMath::Min(NumProjectiles, GetAbilityLevel());
-	TArray<FRotator> Rotations = UChakraAbilitySystemLibrary::EvenlySpacedRotators(Forward, FVector::ForwardVector, ProjectileSpread, EffectiveNumProjectiles);
 
-	for (const FRotator& Rot : Rotations)
-	{
+	Rotation.Pitch = 0.0f;
+	
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
-		SpawnTransform.SetRotation(Rot.Quaternion());
+		SpawnTransform.SetRotation(FQuat(Rotation));;
 
 		AChakraProjectileBase* Projectile = GetWorld()->SpawnActorDeferred<AChakraProjectileBase>(
 		ProjectileClass,
@@ -131,20 +131,8 @@ void UChakraShoot::SpawnProjectiles(const FVector& ProjectileTargetLocation, con
 		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 	
 		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
-
-		if (HomingTarget && HomingTarget->Implements<UCombatInterface>())
-		{
-			Projectile->ProjectileMovement->HomingTargetComponent = HomingTarget->GetRootComponent();
-		}
-		else
-		{
-			Projectile->HomingTargetSceneComponent = NewObject<USceneComponent>(USceneComponent::StaticClass());
-			Projectile->HomingTargetSceneComponent->SetWorldLocation(ProjectileTargetLocation);
-			Projectile->ProjectileMovement->HomingTargetComponent = Projectile->HomingTargetSceneComponent;
-		}
-		Projectile->ProjectileMovement->HomingAccelerationMagnitude = FMath::FRandRange(HomingAccelerationMin, HomingAccelerationMax);
-		Projectile->ProjectileMovement->bIsHomingProjectile = bLaunchHomingProjectiles;
+	
 		
 		Projectile->FinishSpawning(SpawnTransform);
-	}
+	
 }

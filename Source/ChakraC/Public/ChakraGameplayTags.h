@@ -90,6 +90,9 @@ public:
 	FGameplayTag Cooldown_Fire_FireBolt;
 
 	FGameplayTag CombatSocket_Weapon;
+	FGameplayTag CombatSocket_ArrowsLeft;
+	FGameplayTag CombatSocket_ArrowsRight;
+	FGameplayTag CombatSocket_ArrowsMid;
 	FGameplayTag CombatSocket_RightHand;
 	FGameplayTag CombatSocket_LeftHand;
 	FGameplayTag CombatSocket_Tail;

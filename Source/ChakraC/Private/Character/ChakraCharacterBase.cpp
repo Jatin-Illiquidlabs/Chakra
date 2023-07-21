@@ -10,6 +10,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GAS/ChakraAbilitySystemComponent.h"
 #include "AbilitySystemComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 
@@ -35,6 +36,16 @@ AChakraCharacterBase::AChakraCharacterBase()
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	ArrowLeft = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowLeft"));
+	ArrowMid = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowMid"));
+	ArrowRight = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowRight"));
+
+	
+	ArrowLeft->SetupAttachment(GetMesh());
+	ArrowMid->SetupAttachment(GetMesh());
+	ArrowRight->SetupAttachment(GetMesh());
+
 
 	EffectAttachComponent = CreateDefaultSubobject<USceneComponent>("EffectAttachPoint");
 	EffectAttachComponent->SetupAttachment(GetRootComponent());
@@ -153,6 +164,18 @@ FVector AChakraCharacterBase::GetCombatSocketLocation_Implementation(const FGame
 	if (MontageTag.MatchesTagExact(GameplayTags.CombatSocket_Tail))
 	{
 		return GetMesh()->GetSocketLocation(TailSocketName);
+	}
+	if (MontageTag.MatchesTagExact(GameplayTags.CombatSocket_ArrowsLeft))
+	{
+		return ArrowLeft->GetSocketLocation(TailSocketName);
+	}
+	if (MontageTag.MatchesTagExact(GameplayTags.CombatSocket_ArrowsRight))
+	{
+		return ArrowRight->GetSocketLocation(TailSocketName);
+	}
+	if (MontageTag.MatchesTagExact(GameplayTags.CombatSocket_ArrowsMid))
+	{
+		return ArrowMid->GetSocketLocation(TailSocketName);
 	}
 	return FVector();
 }

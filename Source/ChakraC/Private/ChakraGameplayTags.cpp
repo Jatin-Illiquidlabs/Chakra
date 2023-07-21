@@ -382,6 +382,21 @@ void FChakraGameplayTags::InitializeNativeGameplayTags()
 		FString("Tail")
 		);
 
+	GameplayTags.CombatSocket_ArrowsMid = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.ArrowsMid"),
+		FString("ArrowsMid")
+		);
+
+	GameplayTags.CombatSocket_ArrowsRight = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.ArrowsRight"),
+		FString("ArrowsRight")
+		);
+
+	GameplayTags.CombatSocket_ArrowsLeft = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("CombatSocket.ArrowsLeft"),
+		FString("ArrowsLeft")
+		);
+
 	/*
 	 * Montage Tags
 	 */

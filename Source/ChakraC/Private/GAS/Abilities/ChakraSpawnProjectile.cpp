@@ -21,11 +21,17 @@ void UChakraSpawnProjectile::SpawnProjectile(const FVector& ProjectileTargetLoca
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
 		SocketTag);
-	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+	
+	const auto Rotation = UKismetMathLibrary::FindLookAtRotation(SocketLocation, ProjectileTargetLocation);
+
+	FCollisionQueryParams queryParams;
+	queryParams.AddIgnoredActor(GetAvatarActorFromActorInfo());
+	queryParams.bTraceComplex = true;
+	queryParams.bReturnPhysicalMaterial = true;
 	
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);
-	SpawnTransform.SetRotation(Rotation.Quaternion());
+	SpawnTransform.SetRotation(FQuat(Rotation));
 		
 	AChakraProjectileBase* Projectile = GetWorld()->SpawnActorDeferred<AChakraProjectileBase>(
 		ProjectileClass,
