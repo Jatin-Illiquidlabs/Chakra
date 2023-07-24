@@ -202,6 +202,7 @@ void AChakraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 
 UChakraAbilitySystemComponent* AChakraPlayerController::GetASC()
 {
+	
 	if (ChakraAbilitySystemComponent == nullptr)
 	{
 		ChakraAbilitySystemComponent = Cast<UChakraAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
