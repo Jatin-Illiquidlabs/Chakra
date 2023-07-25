@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChakraEnemyCharacter.h"
 #include "Character/ChakraCharacterBase.h"
 #include "Interface/PlayerInterface.h"
 #include "ChakraCharacter.generated.h"
@@ -38,6 +39,9 @@ public:
 	virtual void HideMagicCircle_Implementation() override;
 	/** end Player Interface */
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="AI")
+	bool bIsFocusingOnEnemy = false ;
+
 	/** Combat Interface */
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/** end Combat Interface */
@@ -47,6 +51,36 @@ public:
 
 	virtual void OnRep_Stunned() override;
 	virtual void OnRep_Burned() override;
+
+	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void BeginPlay() override;
+	
+	void OnEnemyDeath(AActor* DeadEnemy);
+	
+protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	class USphereComponent* OverlapSphere;
+	
+	 UFUNCTION()
+        void AutoActivateAbility();
+
+	UFUNCTION()
+	void OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	void SwitchFocusToNextEnemy();
+	
+	void FocusOnEnemy(AActor* TargetEnemy);
+	
+	const float AbilityInterval = 2.0f;
+
+	FTimerHandle TimerHandle_AutoAbility;
+	
+	UPROPERTY()
+	TArray<class AChakraEnemyCharacter*> OverlappingEnemies;
+	
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> TopDownCameraComponent;

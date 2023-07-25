@@ -78,6 +78,8 @@ public:
 
 	UFUNCTION()
 	virtual void OnRep_Burned();
+
+	bool bDead = false;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -106,7 +108,7 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UArrowComponent* ArrowMid;
 
-	bool bDead = false;
+	
 
 	virtual void StunTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
 

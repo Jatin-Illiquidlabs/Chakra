@@ -6,20 +6,31 @@
 #include "ChakraGameplayTags.h"
 #include "Camera/CameraComponent.h"
 #include "NiagaraComponent.h"
+#include "Character/ChakraEnemyCharacter.h"
 #include "Components/ArrowComponent.h"
+#include "Components/SphereComponent.h"
 #include "Data/LevelUpInfo.h"
 #include "Game/ChakraPlayerController.h"
 #include "Game/ChakraPlayerState.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GAS/ChakraAbilitySystemComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
-AChakraCharacter::AChakraCharacter()
+ AChakraCharacter::AChakraCharacter()
 {
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>("CameraBoom");
 	CameraBoom->SetupAttachment(GetRootComponent());
 	CameraBoom->SetUsingAbsoluteRotation(true);
 	CameraBoom->bDoCollisionTest = false;
+
+ 	OverlapSphere = CreateDefaultSubobject<USphereComponent>(TEXT("OverlapSphere"));
+ 	OverlapSphere->SetupAttachment(GetRootComponent());
+ 	OverlapSphere->SetSphereRadius(700.f); // Sphere yarıçapını ihtiyacınıza göre ayarlayın
+ 	OverlapSphere->OnComponentBeginOverlap.AddDynamic(this, &AChakraCharacter::OnEnemyEnterDetectionSphere);
+
+ 	OverlappingEnemies.Empty();
 
 	TopDownCameraComponent = CreateDefaultSubobject<UCameraComponent>("TopDownCameraComponent");
 	TopDownCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
@@ -168,7 +179,7 @@ void AChakraCharacter::HideMagicCircle_Implementation()
 	}
 }
 
-int32 AChakraCharacter::GetPlayerLevel_Implementation()
+ int32 AChakraCharacter::GetPlayerLevel_Implementation()
 {
 	const AChakraPlayerState* ChakraPlayerState = GetPlayerState<AChakraPlayerState>();
 	check(ChakraPlayerState);
@@ -210,7 +221,117 @@ void AChakraCharacter::OnRep_Burned()
 	}
 }
 
-void AChakraCharacter::InitAbilityActorInfo()
+ void AChakraCharacter::Tick(float DeltaSeconds)
+ {
+	 Super::Tick(DeltaSeconds);
+ 	
+ }
+
+ void AChakraCharacter::BeginPlay()
+ {
+	 Super::BeginPlay();
+ 
+ }
+
+
+ void AChakraCharacter::AutoActivateAbility()
+ {
+ 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
+ 	{
+	    if (ChakraPlayerController->bAutoRunning)
+	    {
+		    
+	    }
+	    else
+	    {
+	    	TArray<AActor*> OverlappingActors;
+	    	GetOverlappingActors(OverlappingActors, AChakraEnemyCharacter::StaticClass());
+            
+	    	// Eğer düşmanlar varsa yeteneği çalıştırın
+	    	if (OverlappingActors.Num() > 0)
+	    	{
+	    		if (AbilitySystemComponent)
+	    		{
+	    			FGameplayTagContainer GameplayTagContainer;
+	    			GameplayTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Abilities.Fire.FireBolt")); // Add your ability tag here
+	    			AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer);
+            
+	    		}
+	    	}
+	    }
+ 	}
+ 	
+ }
+
+ void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+                                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+ {
+
+ 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
+ 	{
+	    if (ChakraPlayerController->bAutoRunning)
+	    {
+	    	OverlappingEnemies.Empty();
+	    }
+	    else
+	    {
+	    	// Eğer çarpışan aktör bir düşman karakteri ise listeye ekleyin
+	    	AChakraEnemyCharacter* Enemy = Cast<AChakraEnemyCharacter>(OtherActor);
+	    	if (Enemy)
+	    	{
+	    		OverlappingEnemies.AddUnique(Enemy);
+        
+	    		// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
+	    		if (OverlappingEnemies.Num() == 1)
+	    		{
+	    			FocusOnEnemy(Enemy);
+	    			GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
+	    		}
+	    	}
+	    }
+ 	}
+ }
+
+
+ void AChakraCharacter::SwitchFocusToNextEnemy()
+ {
+ 	if (OverlappingEnemies.Num() > 1)
+ 	{
+ 		OverlappingEnemies.RemoveAt(0);
+ 		FocusOnEnemy(OverlappingEnemies[0]);
+ 	}
+ 	else if (OverlappingEnemies.Num() == 1)
+ 	{
+ 		OverlappingEnemies.RemoveAt(0);
+ 		// Odaklanacak düşman kalmadı, bu durumda başka bir işlem yapabilirsiniz
+ 	}
+ }
+
+void AChakraCharacter::OnEnemyDeath(AActor* DeadEnemy)
+ {
+ 	// Ölen düşman listede mi diye kontrol edin ve listede ise odağını diğer düşmana çevirin
+ 	if (OverlappingEnemies.Contains(DeadEnemy))
+ 	{
+ 		SwitchFocusToNextEnemy();
+ 	}
+ }
+
+ void AChakraCharacter::FocusOnEnemy(AActor* TargetEnemy)
+ {
+ 	if (!IsValid(TargetEnemy))
+ 	{
+ 		return; // Hedef düşman geçerli değilse işlemi sonlandırın
+ 	}
+
+ 	FRotator LookAtRotation = FRotationMatrix::MakeFromX(TargetEnemy->GetActorLocation() - GetActorLocation()).Rotator();
+ 	LookAtRotation.Pitch = 0.0f; // Optional: Set the pitch to 0 to avoid tilting the character upwards/downwards.
+ 	SetActorRotation(LookAtRotation);
+ 	
+ 	
+ }
+
+
+ void AChakraCharacter::InitAbilityActorInfo()
 {
 	AChakraPlayerState* ChakraPlayerState = GetPlayerState<AChakraPlayerState>();
 	check(ChakraPlayerState);

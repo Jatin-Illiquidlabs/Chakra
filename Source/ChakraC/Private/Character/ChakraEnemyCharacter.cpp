@@ -9,11 +9,13 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "ChakraC/ChakraC.h"
+#include "Character/ChakraCharacter.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GAS/ChakraAbilitySystemComponent.h"
 #include "GAS/ChakraAbilitySystemLibrary.h"
 #include "GAS/ChakraAttributeSet.h"
+#include "Kismet/GameplayStatics.h"
 #include "Widget/ChakraUserWidget.h"
 
 AChakraEnemyCharacter::AChakraEnemyCharacter()
@@ -72,6 +74,13 @@ void AChakraEnemyCharacter::Die(const FVector& DeathImpulse)
 {
 	SetLifeSpan(LifeSpan);
 	if (AuraAIController) AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
+
+	AChakraCharacter* MainCharacter = Cast<AChakraCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (MainCharacter)
+	{
+		// AnaKarakterdeki OnEnemyDeath() fonksiyonunu çağırarak odağını diğer düşana çevirin
+		MainCharacter->OnEnemyDeath(this);
+	}
 	
 	Super::Die(DeathImpulse);
 }

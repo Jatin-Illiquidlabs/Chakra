@@ -40,6 +40,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void HideMagicCircle();
 
+	bool bAutoRunning = false;
+
 	
 protected:
 	virtual void BeginPlay() override;
@@ -81,7 +83,7 @@ private:
 	FVector CachedDestination = FVector::ZeroVector;
 	float FollowTime = 0.f;
 	float ShortPressThreshold = 0.5f;
-	bool bAutoRunning = false;
+	
 	bool bTargeting = false;
 
 	UPROPERTY(EditDefaultsOnly)
