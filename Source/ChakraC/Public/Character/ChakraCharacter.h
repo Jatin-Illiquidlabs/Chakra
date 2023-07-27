@@ -68,8 +68,9 @@ protected:
 
 	UFUNCTION()
 	void OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	void SwitchFocusToNextEnemy();
+
+	void ClearEnemyFocus();
+	void SwitchFocusToNextEnemy(AActor* DeadEnemy);
 	
 	void FocusOnEnemy(AActor* TargetEnemy);
 	

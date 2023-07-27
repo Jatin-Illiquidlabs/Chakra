@@ -236,84 +236,84 @@ void AChakraCharacter::OnRep_Burned()
 
  void AChakraCharacter::AutoActivateAbility()
  {
- 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
- 	{
-	    if (ChakraPlayerController->bAutoRunning)
-	    {
-	    	AbilitySystemComponent->CancelAbilities();
-	    }
-	    else
-	    {
-	    	TArray<AActor*> OverlappingActors;
-	    	GetOverlappingActors(OverlappingActors, AChakraEnemyCharacter::StaticClass());
-            
-	    	// Eğer düşmanlar varsa yeteneği çalıştırın
-	    	if (OverlappingActors.Num() > 0)
-	    	{
-	    		if (AbilitySystemComponent)
-	    		{
-	    			FGameplayTagContainer GameplayTagContainer;
-	    			GameplayTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Abilities.Fire.FireBolt")); // Add your ability tag here
-	    			AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer);
-            
-	    		}
-	    	}
-	    }
- 	}
+ 	TArray<AActor*> OverlappingActors;
+ 	GetOverlappingActors(OverlappingActors, AChakraEnemyCharacter::StaticClass());
  	
- }
-
- void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
-                                                    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
- {
-
- 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
+ 	if (OverlappingActors.Num() > 0)
  	{
-	    if (ChakraPlayerController->bAutoRunning)
-	    {
-	    	OverlappingEnemies.Empty();
-	    	GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
-	    }
-	    else
-	    {
-	    	// Eğer çarpışan aktör bir düşman karakteri ise listeye ekleyin
-	    	AChakraEnemyCharacter* Enemy = Cast<AChakraEnemyCharacter>(OtherActor);
-	    	if (Enemy)
-	    	{
-	    		OverlappingEnemies.AddUnique(Enemy);
-        
-	    		// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
-	    		if (OverlappingEnemies.Num() == 1)
-	    		{
-	    			FocusOnEnemy(Enemy);
-	    			GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
-	    		}
-	    	}
-	    }
+ 		if (AbilitySystemComponent)
+ 		{
+ 			FGameplayTagContainer GameplayTagContainer;
+ 			GameplayTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Abilities.Fire.FireBolt")); // Add your ability tag here
+ 			AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer);
+            
+ 		}
  	}
  }
 
-
- void AChakraCharacter::SwitchFocusToNextEnemy()
+void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
+													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
  {
- 	if (OverlappingEnemies.Num() > 1)
+ 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
+ 	{
+ 		if (ChakraPlayerController->bAutoRunning)
+ 		{
+ 			OverlappingEnemies.Empty();
+ 			GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
+ 		}
+ 		else
+ 		{
+ 			AChakraEnemyCharacter* Enemy = Cast<AChakraEnemyCharacter>(OtherActor);
+            if (Enemy)
+            {
+            	FVector SphereLocation = Enemy->GetActorLocation();
+            	float SphereRadius = 20.0f; 
+            	FColor SphereColor = FColor::Yellow; 
+            	
+            	DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, 12, SphereColor, false, 3.0f, 0, 1.0f);
+
+            	OverlappingEnemies.AddUnique(Enemy);
+                
+            	// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
+            	if (OverlappingEnemies.Num() == 1)
+            	{
+            		FocusOnEnemy(Enemy);
+            		GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
+            		
+            	}
+            	
+            }
+ 		}
+ 	}
+ }
+
+ void AChakraCharacter::ClearEnemyFocus()
+ {
+ 	OverlappingEnemies.Empty();
+ 	
+ 	GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
+ }
+
+
+ void AChakraCharacter::SwitchFocusToNextEnemy(AActor* DeadEnemy)
+ {
+ 	if (OverlappingEnemies.Num() > 0)
  	{
  		OverlappingEnemies.RemoveAt(0);
  		FocusOnEnemy(OverlappingEnemies[0]);
- 	}
- 	else if (OverlappingEnemies.Num() == 1)
- 	{
- 		OverlappingEnemies.RemoveAt(0);
- 		// Odaklanacak düşman kalmadı, bu durumda başka bir işlem yapabilirsiniz
  	}
  }
 
 void AChakraCharacter::OnEnemyDeath(AActor* DeadEnemy)
  {
- 	// Ölen düşman listede mi diye kontrol edin ve listede ise odağını diğer düşmana çevirin
  	if (OverlappingEnemies.Contains(DeadEnemy))
  	{
- 		SwitchFocusToNextEnemy();
+ 		
+ 		SwitchFocusToNextEnemy(DeadEnemy);
+ 	}
+ 	if (OverlappingEnemies.Num() == 0)
+ 	{
+ 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Son düşman öldü!"));
  	}
  }
 
@@ -327,8 +327,6 @@ void AChakraCharacter::OnEnemyDeath(AActor* DeadEnemy)
  	FRotator LookAtRotation = FRotationMatrix::MakeFromX(TargetEnemy->GetActorLocation() - GetActorLocation()).Rotator();
  	LookAtRotation.Pitch = 0.0f; // Optional: Set the pitch to 0 to avoid tilting the character upwards/downwards.
  	SetActorRotation(LookAtRotation);
- 	
- 	
  }
 
 
