@@ -240,7 +240,7 @@ void AChakraCharacter::OnRep_Burned()
  	{
 	    if (ChakraPlayerController->bAutoRunning)
 	    {
-		    
+	    	AbilitySystemComponent->CancelAbilities();
 	    }
 	    else
 	    {
@@ -272,6 +272,7 @@ void AChakraCharacter::OnRep_Burned()
 	    if (ChakraPlayerController->bAutoRunning)
 	    {
 	    	OverlappingEnemies.Empty();
+	    	GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
 	    }
 	    else
 	    {
