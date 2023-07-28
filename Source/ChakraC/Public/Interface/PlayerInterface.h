@@ -59,6 +59,12 @@ class CHAKRAC_API IPlayerInterface
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void ShowMagicCircle(UMaterialInterface* DecalMaterial = nullptr);
 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void SetCombatToEnemy(AActor* InCombatTarget);
+	
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	AActor* GetTargetToCombat() const;
+	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void HideMagicCircle();
 };

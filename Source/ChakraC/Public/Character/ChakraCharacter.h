@@ -35,6 +35,8 @@ public:
 	virtual void AddToSpellPoints_Implementation(int32 InSpellPoints) override;
 	virtual int32 GetAttributePoints_Implementation() const override;
 	virtual int32 GetSpellPoints_Implementation() const override;
+	virtual void SetCombatToEnemy_Implementation(AActor* InCombatTarget) override;
+	virtual AActor* GetTargetToCombat_Implementation() const override;
 	virtual void ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial) override;
 	virtual void HideMagicCircle_Implementation() override;
 	/** end Player Interface */
@@ -49,14 +51,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
+
 	virtual void OnRep_Stunned() override;
 	virtual void OnRep_Burned() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 
 	virtual void BeginPlay() override;
-	
-	void OnEnemyDeath(AActor* DeadEnemy);
 	
 protected:
 	
@@ -68,11 +71,7 @@ protected:
 
 	UFUNCTION()
 	void OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	void ClearEnemyFocus();
-	void SwitchFocusToNextEnemy(AActor* DeadEnemy);
 	
-	void FocusOnEnemy(AActor* TargetEnemy);
 	
 	const float AbilityInterval = 2.0f;
 

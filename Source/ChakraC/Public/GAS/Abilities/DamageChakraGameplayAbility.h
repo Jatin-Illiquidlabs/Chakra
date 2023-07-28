@@ -33,6 +33,7 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	float GetDamageAtLevel() const;
+	
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

@@ -6,7 +6,9 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "ChakraAbilityTypes.h"
+#include "Character/ChakraCharacter.h"
 #include "Interface/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
 
 
 void UDamageChakraGameplayAbility::CauseDamage(AActor* TargetActor)

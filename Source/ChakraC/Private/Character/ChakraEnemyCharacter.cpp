@@ -76,13 +76,6 @@ void AChakraEnemyCharacter::Die(const FVector& DeathImpulse)
 {
 	SetLifeSpan(LifeSpan);
 	if (AuraAIController) AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
-
-	AChakraCharacter* MainCharacter = Cast<AChakraCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (MainCharacter)
-	{
-		// AnaKarakterdeki OnEnemyDeath() fonksiyonunu çağırarak odağını diğer düşana çevirin
-		MainCharacter->OnEnemyDeath(this);
-	}
 	
 	Super::Die(DeathImpulse);
 }

@@ -175,7 +175,7 @@ FVector AChakraCharacterBase::GetCombatSocketLocation_Implementation(const FGame
 	}
 	if (MontageTag.MatchesTagExact(GameplayTags.CombatSocket_ArrowsMid))
 	{
-		return ArrowMid->GetSocketLocation(TailSocketName);
+		return ArrowMid->GetComponentLocation();
 	}
 	return FVector();
 }

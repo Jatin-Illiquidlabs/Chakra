@@ -161,7 +161,17 @@ int32 AChakraCharacter::GetSpellPoints_Implementation() const
 	return ChakraPlayerState->GetSpellPoints();
 }
 
-void AChakraCharacter::ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial)
+ void AChakraCharacter::SetCombatToEnemy_Implementation(AActor* InCombatTarget)
+ {
+ 	CombatTarget = InCombatTarget;
+ }
+
+ AActor* AChakraCharacter::GetTargetToCombat_Implementation() const
+ {
+ 	return CombatTarget;
+ }
+
+ void AChakraCharacter::ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial)
 {
 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
 	{
@@ -277,58 +287,13 @@ void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* Overlapp
             	// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
             	if (OverlappingEnemies.Num() == 1)
             	{
-            		FocusOnEnemy(Enemy);
             		GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
-            		
             	}
             	
             }
  		}
  	}
  }
-
- void AChakraCharacter::ClearEnemyFocus()
- {
- 	OverlappingEnemies.Empty();
- 	
- 	GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
- }
-
-
- void AChakraCharacter::SwitchFocusToNextEnemy(AActor* DeadEnemy)
- {
- 	if (OverlappingEnemies.Num() > 0)
- 	{
- 		OverlappingEnemies.RemoveAt(0);
- 		FocusOnEnemy(OverlappingEnemies[0]);
- 	}
- }
-
-void AChakraCharacter::OnEnemyDeath(AActor* DeadEnemy)
- {
- 	if (OverlappingEnemies.Contains(DeadEnemy))
- 	{
- 		
- 		SwitchFocusToNextEnemy(DeadEnemy);
- 	}
- 	if (OverlappingEnemies.Num() == 0)
- 	{
- 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Son düşman öldü!"));
- 	}
- }
-
- void AChakraCharacter::FocusOnEnemy(AActor* TargetEnemy)
- {
- 	if (!IsValid(TargetEnemy))
- 	{
- 		return; // Hedef düşman geçerli değilse işlemi sonlandırın
- 	}
-
- 	FRotator LookAtRotation = FRotationMatrix::MakeFromX(TargetEnemy->GetActorLocation() - GetActorLocation()).Rotator();
- 	LookAtRotation.Pitch = 0.0f; // Optional: Set the pitch to 0 to avoid tilting the character upwards/downwards.
- 	SetActorRotation(LookAtRotation);
- }
-
 
  void AChakraCharacter::InitAbilityActorInfo()
 {
