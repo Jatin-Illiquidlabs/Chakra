@@ -259,6 +259,12 @@ void AChakraCharacter::OnRep_Burned()
             
  		}
  	}
+ 	AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController());
+ 	if (ChakraPlayerController->bAutoRunning)
+ 	{
+ 		OverlappingEnemies.Empty();
+ 		GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
+ 	}
  }
 
 void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -293,8 +299,7 @@ void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* Overlapp
             }
  		}
  	}
- }
-
+}
  void AChakraCharacter::InitAbilityActorInfo()
 {
 	AChakraPlayerState* ChakraPlayerState = GetPlayerState<AChakraPlayerState>();

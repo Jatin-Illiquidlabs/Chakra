@@ -78,7 +78,8 @@ public:
 
 	UFUNCTION()
 	virtual void OnRep_Burned();
-
+	
+	UPROPERTY(BlueprintReadOnly)
 	bool bDead = false;
 	
 protected:
