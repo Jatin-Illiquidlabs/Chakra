@@ -283,42 +283,35 @@ void AChakraCharacter::OnRep_Burned()
 void AChakraCharacter::OnEnemyEnterDetectionSphere(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 													UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
  {
- 	AChakraPlayerController* PC = Cast<AChakraPlayerController>(GetController());
- 	FVector playerLocation = GetActorLocation();
- 	
- 	FVector cachedDestination = PC->CachedDestination;
-
- 	
- 	float distance = FVector::Dist(playerLocation, cachedDestination);
- 	
- 	if (distance > 20.0f)
+ 	if (AChakraPlayerController* ChakraPlayerController = Cast<AChakraPlayerController>(GetController()))
  	{
- 		OverlappingEnemies.Empty();
- 		GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
- 	}
- 	
- 	else
- 	{
- 		AChakraEnemyCharacter* Enemy = Cast<AChakraEnemyCharacter>(OtherActor);
- 		if (Enemy)
+ 		if (ChakraPlayerController->bAutoRunning)
  		{
- 			FVector SphereLocation = Enemy->GetActorLocation();
- 			float SphereRadius = 20.0f; 
- 			FColor SphereColor = FColor::Yellow; 
+ 			OverlappingEnemies.Empty();
+ 			GetWorldTimerManager().ClearTimer(TimerHandle_AutoAbility);
+ 		}
+ 		else
+ 		{
+ 			AChakraEnemyCharacter* Enemy = Cast<AChakraEnemyCharacter>(OtherActor);
+            if (Enemy)
+            {
+            	FVector SphereLocation = Enemy->GetActorLocation();
+            	float SphereRadius = 20.0f; 
+            	FColor SphereColor = FColor::Yellow; 
             	
- 			DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, 12, SphereColor, false, 3.0f, 0, 1.0f);
+            	DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, 12, SphereColor, false, 3.0f, 0, 1.0f);
 
- 			OverlappingEnemies.AddUnique(Enemy);
+            	OverlappingEnemies.AddUnique(Enemy);
                 
- 			// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
- 			if (OverlappingEnemies.Num() == 1)
- 			{
- 				GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
- 			}
+            	// Eğer şu an hiçbir düşman odaklanmamışsa, çarpışan düşmana odaklanın
+            	if (OverlappingEnemies.Num() == 1)
+            	{
+            		GetWorldTimerManager().SetTimer(TimerHandle_AutoAbility, this, &AChakraCharacter::AutoActivateAbility, AbilityInterval, true);
+            	}
             	
+            }
  		}
  	}
- 	
 }
  void AChakraCharacter::InitAbilityActorInfo()
 {
