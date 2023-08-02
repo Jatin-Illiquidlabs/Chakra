@@ -155,22 +155,41 @@ void AChakraEnemyCharacter::DetectAndDrawSphere()
 
 void AChakraEnemyCharacter::MoveTowardsTargetPosition(FVector TargetPosition)
 {
-	if (TargetPosition == GetActorLocation())
-		return;
+	FVector CharacterLocation = GetActorLocation();
+	FVector Direction = TargetPosition - CharacterLocation;
+	Direction.Z = 0.0f;
 
-	
+	float DistanceToTarget = Direction.Size();
 
 	UCharacterMovementComponent* MovementComponent = GetCharacterMovement();
 	if (MovementComponent)
 	{
-		FVector Direction = TargetPosition - GetActorLocation();
-		Direction.Z = 0.0f;
-		Direction.Normalize();
-		AddMovementInput(Direction, 1.0f);
+		if (DistanceToTarget <= 50.0f)
+		{
+			MovementComponent->StopMovementImmediately(); // Stop the movement if distance is less than or equal to 10 units
+			return;
+			SetActorRotation(GetActorRotation());
+			if (AbilitySystemComponent)
+			{
+				FGameplayTagContainer GameplayTagContainer;
+				GameplayTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Abilities.Fire.FireBolt")); // Add your ability tag here
+				AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer);
+            
+			}
+		}
+		else
+		{
+			Direction.Normalize();
 
-		FRotator NewRotation = Direction.Rotation();
-		NewRotation.Pitch = 0.0f; // Resetting pitch rotation to avoid tilting
-		SetActorRotation(NewRotation);
+			// Set character rotation to look at the target position
+			FRotator NewRotation = Direction.Rotation();
+			NewRotation.Pitch = 0.0f; // Resetting pitch rotation to avoid tilting
+			SetActorRotation(NewRotation);
+
+			AddMovementInput(Direction, 1.0f);
+		}
+
+		
 	}
 }
 

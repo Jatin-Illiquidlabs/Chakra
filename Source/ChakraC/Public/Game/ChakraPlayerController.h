@@ -42,6 +42,7 @@ public:
 
 	bool bAutoRunning = false;
 
+	FVector CachedDestination = FVector::ZeroVector;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -80,7 +81,7 @@ private:
 	UChakraAbilitySystemComponent* GetASC();
 
 	
-	FVector CachedDestination = FVector::ZeroVector;
+
 	float FollowTime = 0.f;
 	float ShortPressThreshold = 0.5f;
 	

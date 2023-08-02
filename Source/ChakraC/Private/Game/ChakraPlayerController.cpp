@@ -11,6 +11,8 @@
 #include "NavigationSystem.h"
 #include "Actors/MagicCircle.h"
 #include "ChakraC/ChakraC.h"
+#include "Character/ChakraCharacter.h"
+#include "Character/ChakraEnemyCharacter.h"
 #include "Components/DecalComponent.h"
 #include "Components/SplineComponent.h"
 #include "GameFramework/Character.h"
@@ -117,6 +119,7 @@ void AChakraPlayerController::CursorTrace()
 
 void AChakraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
+	
 	if (GetASC() && GetASC()->HasMatchingGameplayTag(FChakraGameplayTags::Get().Player_Block_InputPressed))
 	{
 		return;
