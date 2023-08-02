@@ -24,6 +24,8 @@ public:
 	AChakraEnemyCharacter();
 	virtual void PossessedBy(AController* NewController) override;
 
+	virtual void Tick(float DeltaTime) override;
+
 	/** Enemy Interface */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
@@ -35,7 +37,8 @@ public:
 	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
 	virtual AActor* GetCombatTarget_Implementation() const override;
 	/** end Combat Interface */
-
+	
+	
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	TObjectPtr<AActor> CombatTarget;
 
@@ -52,6 +55,16 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	float LifeSpan = 5.f;
+
+	void DetectAndDrawSphere();
+
+	UPROPERTY(VisibleAnywhere)
+	class USphereComponent* DetectionSphere;
+
+	void MoveTowardsTargetPosition(FVector TargetPosition);
+
+	UPROPERTY(EditAnywhere)
+	float MoveDistanceThreshold;
 	
 protected:
 	virtual void BeginPlay() override;
@@ -70,5 +83,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AChakraAIController> AuraAIController;
+
 	
 };

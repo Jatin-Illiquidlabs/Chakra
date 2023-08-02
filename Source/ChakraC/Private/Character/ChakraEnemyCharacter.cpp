@@ -5,11 +5,13 @@
 
 
 #include "ChakraGameplayTags.h"
+#include "EngineUtils.h"
 #include "AI/ChakraAIController.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "ChakraC/ChakraC.h"
 #include "Character/ChakraCharacter.h"
+#include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GAS/ChakraAbilitySystemComponent.h"
@@ -26,7 +28,10 @@ AChakraEnemyCharacter::AChakraEnemyCharacter()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
-	
+	DetectionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("DetectionSphere"));
+	DetectionSphere->SetupAttachment(RootComponent);
+	DetectionSphere->InitSphereRadius(500.0f); // Set the detection radius of the sphere
+
 
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
@@ -39,6 +44,8 @@ AChakraEnemyCharacter::AChakraEnemyCharacter()
 	HealthBar->SetupAttachment(GetRootComponent());
 	
 	BaseWalkSpeed = 250.f;
+
+	MoveDistanceThreshold = 300.0f;
 }
 
 void AChakraEnemyCharacter::PossessedBy(AController* NewController)
@@ -51,6 +58,34 @@ void AChakraEnemyCharacter::PossessedBy(AController* NewController)
 	AuraAIController->RunBehaviorTree(BehaviorTree);
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), false);
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"), CharacterClass != ECharacterClass::Warrior);
+}
+
+void AChakraEnemyCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	DetectAndDrawSphere();
+
+	ACharacter* DeadEnemy = nullptr;
+	float ClosestDistance = MoveDistanceThreshold;
+	for (TActorIterator<AChakraEnemyCharacter> It(GetWorld()); It; ++It)
+	{
+		AChakraEnemyCharacter* Enemy = *It;
+		if (Enemy != this && Enemy->bDead)
+		{
+			float Distance = FVector::Distance(GetActorLocation(), Enemy->GetActorLocation());
+			if (Distance < ClosestDistance)
+			{
+				ClosestDistance = Distance;
+				DeadEnemy = Enemy;
+			}
+		}
+	}
+
+	if (DeadEnemy)
+	{
+		MoveTowardsTargetPosition(DeadEnemy->GetActorLocation());
+	}
 }
 
 void AChakraEnemyCharacter::HighlightActor()
@@ -78,6 +113,9 @@ void AChakraEnemyCharacter::Die(const FVector& DeathImpulse)
 	if (AuraAIController) AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
 	
 	Super::Die(DeathImpulse);
+
+	TArray<AActor*> FoundDeadBodies;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), TEXT("DeadBody"), FoundDeadBodies);
 }
 
 void AChakraEnemyCharacter::SetCombatTarget_Implementation(AActor* InCombatTarget)
@@ -88,6 +126,52 @@ void AChakraEnemyCharacter::SetCombatTarget_Implementation(AActor* InCombatTarge
 AActor* AChakraEnemyCharacter::GetCombatTarget_Implementation() const
 {
 	return CombatTarget;
+}
+
+void AChakraEnemyCharacter::DetectAndDrawSphere()
+{
+	TArray<AActor*> OverlappingActors;
+	DetectionSphere->GetOverlappingActors(OverlappingActors, AChakraEnemyCharacter::StaticClass());
+
+	if (OverlappingActors.Num() > 0)
+	{
+		for (AActor* Actor : OverlappingActors)
+		{
+			// Check if the overlapped actor is another enemy (AEnemyCharacter)
+			AChakraEnemyCharacter* OtherEnemy = Cast<AChakraEnemyCharacter>(Actor);
+			if (OtherEnemy && OtherEnemy != this)
+			{
+				if (OtherEnemy->bDead)
+				{
+					// Draw a debug sphere at the location of the overlapped enemy
+					FVector SphereCenter = OtherEnemy->GetActorLocation();
+					float SphereRadius = 50.0f; // You can adjust this radius to your preference
+					DrawDebugSphere(GetWorld(), SphereCenter, SphereRadius, 12, FColor::Green, false, 0.1f, 0, 1);
+				}
+			}
+		}
+	}
+}
+
+void AChakraEnemyCharacter::MoveTowardsTargetPosition(FVector TargetPosition)
+{
+	if (TargetPosition == GetActorLocation())
+		return;
+
+	
+
+	UCharacterMovementComponent* MovementComponent = GetCharacterMovement();
+	if (MovementComponent)
+	{
+		FVector Direction = TargetPosition - GetActorLocation();
+		Direction.Z = 0.0f;
+		Direction.Normalize();
+		AddMovementInput(Direction, 1.0f);
+
+		FRotator NewRotation = Direction.Rotation();
+		NewRotation.Pitch = 0.0f; // Resetting pitch rotation to avoid tilting
+		SetActorRotation(NewRotation);
+	}
 }
 
 void AChakraEnemyCharacter::BeginPlay()

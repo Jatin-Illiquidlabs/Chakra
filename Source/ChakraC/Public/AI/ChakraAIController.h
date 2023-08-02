@@ -19,6 +19,7 @@ class CHAKRAC_API AChakraAIController : public AAIController
 	GENERATED_BODY()
 public:
 	AChakraAIController();
+	
 protected:
 
 	UPROPERTY()

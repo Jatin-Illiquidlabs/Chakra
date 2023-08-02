@@ -3,8 +3,11 @@
 
 #include "AI/ChakraAIController.h"
 
+#include "NavigationSystem.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Character/ChakraEnemyCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 AChakraAIController::AChakraAIController()
 {
@@ -13,3 +16,7 @@ AChakraAIController::AChakraAIController()
 	BehaviorTreeComponent = CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTreeComponent");
 	check(BehaviorTreeComponent);
 }
+
+
+
+
