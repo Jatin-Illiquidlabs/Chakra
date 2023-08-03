@@ -167,15 +167,17 @@ void AChakraEnemyCharacter::MoveTowardsTargetPosition(FVector TargetPosition)
 		if (DistanceToTarget <= 50.0f)
 		{
 			MovementComponent->StopMovementImmediately(); // Stop the movement if distance is less than or equal to 10 units
-			return;
+		
 			SetActorRotation(GetActorRotation());
+			
 			if (AbilitySystemComponent)
 			{
 				FGameplayTagContainer GameplayTagContainer;
 				GameplayTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Abilities.Fire.FireBolt")); // Add your ability tag here
 				AbilitySystemComponent->TryActivateAbilitiesByTag(GameplayTagContainer);
-            
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Eat"));
 			}
+			return;
 		}
 		else
 		{

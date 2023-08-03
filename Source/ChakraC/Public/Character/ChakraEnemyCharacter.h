@@ -8,6 +8,14 @@
 #include "Widget/OverlayWidgetController.h"
 #include "ChakraEnemyCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class ECharacterType : uint8
+{
+	Zombie UMETA(DisplayName = "Zombie"),
+	WareWolf UMETA(DisplayName = "WareWolf"),
+	
+};
+
 class UWidgetComponent;
 class UBehaviorTree;
 class AChakraAIController;
@@ -41,6 +49,9 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	TObjectPtr<AActor> CombatTarget;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+	ECharacterType CharacterType;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChanged;
