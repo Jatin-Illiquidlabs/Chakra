@@ -1,21 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GAS/Abilities/GA_TeleportAbility.h"
+#include "GAS/Abilities/SpawnTrails.h"
 
 #include "Actors/SwordProjectile.h"
-#include "Character/ChakraCharacterBase.h"
-#include "GameFramework/ProjectileMovementComponent.h"
-#include "GAS/ChakraAbilitySystemLibrary.h"
-#include "Navigation/PathFollowingComponent.h"
 
-UGA_TeleportAbility::UGA_TeleportAbility()
+
+USpawnTrails::USpawnTrails()
 {
 	SweepRadius = 20.0f;
 	SweepDistanceFallback = 5000;
 }
 
-FString UGA_TeleportAbility::GetDescription(int32 Level)
+FString USpawnTrails::GetDescription(int32 Level)
 {
 	const int32 ScaledDamage = Damage.GetValueAtLevel(Level);
 	const float ManaCost = FMath::Abs(GetManaCost(Level));
@@ -76,7 +73,7 @@ FString UGA_TeleportAbility::GetDescription(int32 Level)
 	}
 }
 
-FString UGA_TeleportAbility::GetNextLevelDescription(int32 Level)
+FString USpawnTrails::GetNextLevelDescription(int32 Level)
 {
 	const int32 ScaledDamage = Damage.GetValueAtLevel(Level);
 	const float ManaCost = FMath::Abs(GetManaCost(Level));
@@ -108,52 +105,42 @@ FString UGA_TeleportAbility::GetNextLevelDescription(int32 Level)
 			ScaledDamage);
 }
 
-void UGA_TeleportAbility::ProjectileAttack(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag)
+
+void USpawnTrails::SpawnTrail(const FVector& ProjectileTargetLocation)
 {
 	if (ensureAlways(ProjectileClass))
 	{
-		const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
-		GetAvatarActorFromActorInfo(),
-		SocketTag);
-
-		// Calculate TraceStart and TraceEnd
-		FVector TraceStart = SocketLocation;
 		FVector TraceEnd = ProjectileTargetLocation;
 
 		// Perform a sweep and adjust TraceEnd if a blocking hit is found
 		FCollisionShape Shape;
 		Shape.SetSphere(SweepRadius);
-
-		FCollisionQueryParams Params;
-		Params.AddIgnoredActor(Cast<AChakraCharacterBase>(GetAvatarActorFromActorInfo()));
-
-		FHitResult Hit;
-		if (GetWorld()->SweepSingleByChannel(Hit, TraceStart, TraceEnd, FQuat::Identity, ECC_GameTraceChannel1, Shape, Params))
-		{
-			TraceEnd = Hit.ImpactPoint;
-		}
+		
+		
 
 		// Draw debug visuals (optional)
 		DrawDebugSphere(GetWorld(), TraceEnd, 10.0f, 12, FColor::Red, false, 5.0f);
-		DrawDebugLine(GetWorld(), TraceStart, TraceEnd, FColor::Green, false, 5.0f);
+		
+	
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(ProjectileTargetLocation);
 
-		// Find new direction/rotation from Hand pointing to impact point in the world.
-		FRotator ProjRotation = (TraceEnd - SocketLocation).Rotation();
-
-		// Initialize the projectile with the calculated TraceStart and TraceEnd
-		ASwordProjectile* Projectile = GetWorld()->SpawnActor<ASwordProjectile>(ProjectileClass, TraceStart, ProjRotation);
-		if (Projectile)
-		{
-			Projectile->InitializeProjectile(TraceStart, TraceEnd);
-		}
-		else
-		{
-			UE_LOG(LogTemp, Error, TEXT("Failed to spawn SwordProjectile!"));
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("ProjectileClass is not set in UGA_TeleportAbility!"));
+		AChakraProjectileBase* Projectile = GetWorld()->SpawnActorDeferred<AChakraProjectileBase>(
+		ProjectileClass,
+		SpawnTransform,
+		GetOwningActorFromActorInfo(),
+		Cast<APawn>(GetOwningActorFromActorInfo()),
+		ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	
+		Projectile->DamageEffectParams = MakeDamageEffectParamsFromClassDefaults();
+	
+		
+		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
 
+void USpawnTrails::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo,
+	const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
+{
+	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+}

@@ -20,7 +20,7 @@ class CHAKRAC_API AChakraProjectileBase : public AActor
 public:	
 	AChakraProjectileBase();
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
 
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))

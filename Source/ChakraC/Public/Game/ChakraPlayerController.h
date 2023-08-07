@@ -42,6 +42,7 @@ public:
 
 	bool bAutoRunning = false;
 
+	UPROPERTY(BlueprintReadOnly)
 	FVector CachedDestination = FVector::ZeroVector;
 	
 protected:

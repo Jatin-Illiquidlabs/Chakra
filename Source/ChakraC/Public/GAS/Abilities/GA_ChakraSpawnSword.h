@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Actors/ChakraProjectileBase.h"
+#include "Actors/SwordProjectile.h"
 #include "GAS/Abilities/DamageChakraGameplayAbility.h"
 #include "GA_ChakraSpawnSword.generated.h"
 
@@ -22,7 +23,7 @@ protected:
 	void SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch = false, float PitchOverride = 0.f);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TSubclassOf<AChakraProjectileBase> ProjectileClass;
+	TSubclassOf<ASwordProjectile> ProjectileClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	int32 NumProjectiles = 5;

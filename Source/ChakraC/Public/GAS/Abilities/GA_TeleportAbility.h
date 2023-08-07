@@ -15,13 +15,23 @@ class CHAKRAC_API UGA_TeleportAbility : public UGA_ChakraSpawnSword
 	GENERATED_BODY()
 	
 public:
+
+	UGA_TeleportAbility();
+	
 	virtual FString GetDescription(int32 Level) override;
 	virtual FString GetNextLevelDescription(int32 Level) override;
 
 	UFUNCTION(BlueprintCallable)
-	void SpawnProjectiles(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag, bool bOverridePitch, float PitchOverride, AActor* HomingTarget);
-
+	void ProjectileAttack(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag);
 protected:
+
+	/* Sphere radius of the sweep to find desired target under crosshair. Adjusts final projectile direction */
+	UPROPERTY(EditAnywhere, Category="Targeting")
+	float SweepRadius;
+
+	/* Fallback distance when sweep finds no collision under crosshair. Adjusts final projectile direction */
+	UPROPERTY(EditAnywhere, Category="Targeting")
+	float SweepDistanceFallback;
 
 	UPROPERTY(EditDefaultsOnly, Category = "FireBolt")
 	float ProjectileSpread = 90.f;
